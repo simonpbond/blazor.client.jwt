@@ -10,13 +10,15 @@ Microsoft.JSInterop.Json
     
 
 
-### Usage:    
+### Example Usage:    
 ```
 JwtTokenParser myTokenParser = new JwtTokenParser();    
 AppToken appToken = myTokenParser.ParseToken("yourJwtToken");    
     
 Console.WriteLine(appToken.Header.TokenAlgorithm);    
 Console.WriteLine(appToken.Payload.TokenExpirationTime.ToString());    
-Console.WriteLine(appToken.GetClaimValueByKey("exp"));
+Console.WriteLine(appToken.Payload.GetClaimValueByKey("exp"));
+Console.WriteLine(appToken.Payload.ClaimExists("key").ToString());
+Console.WriteLine(appToken.GetAsJson());
 ```
 
