@@ -1,5 +1,5 @@
-# blazor.client.jwt
 ### Jwt parser for Blazor client   
+#### blazor.client.jwt
 ---
 #### Note: Currently does not support duplicate claim keys (needs some work).    
 All registered and private claims are additionally stored in AppToken.Payload.Claims    
