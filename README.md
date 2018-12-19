@@ -6,7 +6,7 @@ All registered and private claims are additionally stored in AppToken.Payload.Cl
 
 #### Requires nuget packages:
 Microsoft.AspNetCore.WebUtilities    
-Utilises: Microsoft.JSInterop.Json    
+Microsoft.JSInterop.Json    
     
 
 
