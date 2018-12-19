@@ -9,7 +9,7 @@ namespace Blazor.Client.Jwt
     public class JwtTokenParser
     {
 
-        public AppToken DeserializeToken(string encodedToken)
+        public AppToken ParseToken(string encodedToken)
         {
             AppToken appToken = new AppToken();
             try
