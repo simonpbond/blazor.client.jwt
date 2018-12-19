@@ -9,7 +9,7 @@ using System.Linq;
     public class JwtTokenParser
     {
 
-        private AppToken DeserializeToken(string encodedToken)
+        public AppToken DeserializeToken(string encodedToken)
         {
             AppToken appToken = new AppToken();
             try
