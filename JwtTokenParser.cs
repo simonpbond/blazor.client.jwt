@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.JSInterop;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.JSInterop;
 
-
+namespace Blazor.Client.Jwt
+{
     public class JwtTokenParser
     {
 
@@ -19,12 +19,12 @@ using System.Linq;
                 byte[] decodedHeaderBytes = Microsoft.AspNetCore.WebUtilities.WebEncoders.Base64UrlDecode(tokenSections[0]);
                 var decodedHeaderJson = System.Text.Encoding.UTF8.GetString(decodedHeaderBytes);
                 var headerDictionary = new Dictionary<string, object>();
-                headerDictionary = Json.Deserialize<Dictionary<string, object>>(decodedHeaderJson);
+                headerDictionary = Microsoft.JSInterop.Json.Deserialize<Dictionary<string, object>>(decodedHeaderJson);
 
                 byte[] decodedPayloadBytes = Microsoft.AspNetCore.WebUtilities.WebEncoders.Base64UrlDecode(tokenSections[1]);
                 var decodedPayloadJson = System.Text.Encoding.UTF8.GetString(decodedPayloadBytes);
                 var payloadDictionary = new Dictionary<string, object>();
-                payloadDictionary = Json.Deserialize<Dictionary<string, object>>(decodedPayloadJson);
+                payloadDictionary = Microsoft.JSInterop.Json.Deserialize<Dictionary<string, object>>(decodedPayloadJson);
 
 
                 appToken.Header = new AppToken.AppTokenHeader()
@@ -45,7 +45,7 @@ using System.Linq;
                     TokenAudience = payloadDictionary.ContainsKey("aud") ? payloadDictionary.Where(claim => claim.Key == "aud").SingleOrDefault().Value.ToString() : string.Empty,
                     TokenExpirationTime = dateTimeEpoch.AddSeconds(int.Parse(payloadDictionary.ContainsKey("exp") ? payloadDictionary.Where(claim => claim.Key == "exp").SingleOrDefault().Value.ToString() : "0")),
                     TokenNotBeforeTime = dateTimeEpoch.AddSeconds(int.Parse(payloadDictionary.ContainsKey("nbf") ? payloadDictionary.Where(claim => claim.Key == "nbf").SingleOrDefault().Value.ToString() : "0")),
-                    TokenIssuedAt = payloadDictionary.ContainsKey("iat") ? payloadDictionary.Where(claim => claim.Key == "iat").SingleOrDefault().Value.ToString() : string.Empty,
+                    TokenIssuedAt = dateTimeEpoch.AddSeconds(int.Parse(payloadDictionary.ContainsKey("iat") ? payloadDictionary.Where(claim => claim.Key == "iat").SingleOrDefault().Value.ToString() : "0")),
                     TokenIssuer = payloadDictionary.ContainsKey("iss") ? payloadDictionary.Where(claim => claim.Key == "iss").SingleOrDefault().Value.ToString() : string.Empty
                 };
 
@@ -58,24 +58,24 @@ using System.Linq;
             return appToken;
         }
 
-        internal class AppToken
+        public class AppToken
         {
             public AppTokenHeader Header { get; set; }
             public AppTokenPayload Payload { get; set; }
 
             public string GetAsJson()
             {
-                var json = Json.Serialize(this);
+                var json = Microsoft.JSInterop.Json.Serialize(this);
                 return json;
             }
 
-            internal class AppTokenHeader
+            public class AppTokenHeader
             {
                 public string TokenAlgorithm { get; set; }
                 public string TokenType { get; set; }
             }
 
-            internal class AppTokenPayload
+            public class AppTokenPayload
             {
                 public string TokenIssuer { get; set; }
                 public string TokenSubject { get; set; }
@@ -83,7 +83,7 @@ using System.Linq;
                 public string TokenAudience { get; set; }
                 public DateTime TokenExpirationTime { get; set; }
                 public DateTime TokenNotBeforeTime { get; set; }
-                public string TokenIssuedAt { get; set; }
+                public DateTime TokenIssuedAt { get; set; }
                 public string TokenJwtIdentifier { get; set; }
                 public Dictionary<string, string> Claims { get; set; } = new Dictionary<string, string>();
 
@@ -102,4 +102,4 @@ using System.Linq;
             }
         }
     }
-
+}
