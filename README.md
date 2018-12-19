@@ -1,4 +1,4 @@
-### Jwt parser for Blazor client   
+## Jwt parser for Blazor client   
 #### blazor.client.jwt
 ---
 #### Note: Currently does not support duplicate claim keys (needs some work).    
