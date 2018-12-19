@@ -16,6 +16,6 @@ var appToken = myTokenParser.DeserializeToken("yourJwtToken");
     
     
 Console.WriteLine(appToken.Header.TokenAlgorithm);    
-Console.WriteLine(appToken.Payload.TokenExpirationTime.ToString());
+Console.WriteLine(appToken.Payload.TokenExpirationTime.ToString());    
 Console.WriteLine(appToken.GetClaimValueByKey("exp"));
 
