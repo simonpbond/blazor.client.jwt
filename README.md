@@ -15,7 +15,6 @@ Utilises: Microsoft.JSInterop.Json
 JwtTokenParser myTokenParser = new JwtTokenParser();    
 var appToken = myTokenParser.DeserializeToken("yourJwtToken");    
     
-    
 Console.WriteLine(appToken.Header.TokenAlgorithm);    
 Console.WriteLine(appToken.Payload.TokenExpirationTime.ToString());    
 Console.WriteLine(appToken.GetClaimValueByKey("exp"));
