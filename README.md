@@ -13,7 +13,7 @@ Microsoft.JSInterop.Json
 ### Usage:    
 ```
 JwtTokenParser myTokenParser = new JwtTokenParser();    
-var appToken = myTokenParser.ParseToken("yourJwtToken");    
+AppToken appToken = myTokenParser.ParseToken("yourJwtToken");    
     
 Console.WriteLine(appToken.Header.TokenAlgorithm);    
 Console.WriteLine(appToken.Payload.TokenExpirationTime.ToString());    
